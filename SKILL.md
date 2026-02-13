@@ -1,9 +1,20 @@
 ---
 name: aliyun-image
 description: "阿里云百炼图像生成与编辑。文生图：根据文本生成图像，支持复杂文字渲染。图像编辑：单图编辑、多图融合、风格迁移、物体增删。触发词：生成图片、AI作画、文生图、图像编辑、修图、换背景、风格迁移、多图融合。模型：qwen-image-plus(默认)、qwen-image-max、qwen-image-edit-plus(默认)、qwen-image-edit-max。"
+metadata:
+  {
+    "openclaw":
+      {
+        "repository": "https://github.com/StanleyChanH/aliyun-image-skill",
+        "clawhub": "https://clawhub.com/skill/aliyun-image",
+        "sync": "GitHub 和 ClawHub 同步更新"
+      }
+  }
 ---
 
 # 阿里云百炼图像生成与编辑
+
+> 🔄 **同步更新**：本项目在 [GitHub](https://github.com/StanleyChanH/aliyun-image-skill) 和 [ClawHub](https://clawhub.com/skill/aliyun-image) 同步发布。
 
 ## 快速开始
 

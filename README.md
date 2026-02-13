@@ -2,8 +2,25 @@
 
 [![Version](https://img.shields.io/badge/version-1.0.1-blue.svg)](https://clawhub.com)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![ClawHub](https://img.shields.io/badge/ClawHub-Synced-green.svg)](https://clawhub.com/skill/aliyun-image)
 
 阿里云百炼平台提供的图像生成与编辑能力，包含千问-文生图(Qwen-Image)和千问-图像编辑(Qwen-Image-Edit)两个模型系列。
+
+## 🔄 同步更新
+
+本项目在 **GitHub** 和 **ClawHub** 同步发布更新：
+
+- **GitHub 仓库**: https://github.com/StanleyChanH/aliyun-image-skill
+- **ClawHub 页面**: https://clawhub.com/skill/aliyun-image
+
+### 自动同步机制
+- ✅ 使用 GitHub Actions 自动同步到 ClawHub
+- ✅ 每次推送到 `main` 分支自动触发
+- ✅ 版本号和更新日志保持一致
+- ✅ GitHub Release 自动创建
+
+### 配置自动同步
+查看 [.github/SETUP.md](.github/SETUP.md) 了解如何配置 GitHub Actions 自动同步。
 
 ## 更新日志
 
@@ -122,7 +139,21 @@ MIT
 
 ## 作者
 
-哈基
+StanleyChanH
+
+## 同步更新
+
+本项目在 **GitHub** 和 **ClawHub** 同步发布更新：
+
+- **GitHub**: https://github.com/StanleyChanH/aliyun-image-skill
+- **ClawHub**: https://clawhub.com/skill/aliyun-image
+
+每次发布新版本时，会同时推送到两个平台，确保用户可以从任一渠道获取最新版本。
+
+### 版本同步策略
+- 所有版本更新优先发布到 GitHub
+- 通过自动化流程同步到 ClawHub
+- 两个平台保持版本号一致
 
 ---
 
