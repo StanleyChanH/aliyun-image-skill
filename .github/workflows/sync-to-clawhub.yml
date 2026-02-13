@@ -30,7 +30,7 @@ jobs:
       env:
         CLAWHUB_TOKEN: ${{ secrets.CLAWHUB_TOKEN }}
       run: |
-        echo "$CLAWHUB_TOKEN" | clawhub login --token
+        clawhub login --token "$CLAWHUB_TOKEN" --no-browser
 
     - name: Get version from metadata
       id: version
