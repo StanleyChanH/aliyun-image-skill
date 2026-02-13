@@ -1,10 +1,10 @@
-# 阿里云百炼图像生成与编辑 Skill
+# 阿里云百炼图像生成、编辑与翻译 Skill
 
-[![Version](https://img.shields.io/badge/version-1.0.4-blue.svg)](https://clawhub.com)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://clawhub.com)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![ClawHub](https://img.shields.io/badge/ClawHub-Synced-green.svg)](https://clawhub.com/skill/aliyun-image)
 
-阿里云百炼平台提供的图像生成与编辑能力，包含千问-文生图(Qwen-Image)和千问-图像编辑(Qwen-Image-Edit)两个模型系列。
+阿里云百炼平台提供的图像生成、编辑与翻译能力，包含千问-文生图(Qwen-Image)、千问-图像编辑(Qwen-Image-Edit)和千问-图像翻译(Qwen-MT-Image)三个模型。
 
 ## 🔄 同步更新
 
@@ -24,6 +24,12 @@
 查看 [.github/SETUP.md](.github/SETUP.md) 了解如何配置 GitHub Actions 自动同步。
 
 ## 更新日志
+
+### v1.1.0 (2026-02-13)
+- 新增图像翻译功能（Qwen-MT-Image）
+- 支持11种源语言和14种目标语言
+- 提供术语定义、敏感词过滤、领域提示等高级功能
+- 更新客户端脚本支持翻译命令
 
 ### v1.0.4 (2026-02-13)
 - 修复 GitHub Actions 权限问题
@@ -59,6 +65,15 @@
 - 风格迁移：艺术风格转换
 - 细节增强：图像质量提升
 
+### 🌐 图像翻译 (Qwen-MT-Image)
+- 精准翻译图像中的文字
+- 保留原始排版与内容信息
+- 支持11种源语言（中/英/日/韩/俄/西/法/葡/意/德/越）
+- 支持14种目标语言（含马来/泰/印尼/阿拉伯）
+- 领域提示：电商、客服等场景优化
+- 敏感词过滤：屏蔽指定内容
+- 术语定义：自定义专业术语翻译
+
 ## 支持的模型
 
 ### 文生图模型
@@ -70,6 +85,9 @@
 - `qwen-image-edit-max` - 高质量编辑
 - `qwen-image-edit-plus` - 性价比高
 - `qwen-image-edit` - 基础版
+
+### 图像翻译模型
+- `qwen-mt-image` - 图像文字翻译，保留排版
 
 ## 安装要求
 
@@ -85,7 +103,7 @@ export DASHSCOPE_API_KEY="your_api_key_here"
 
 ### 依赖安装（可选）
 ```bash
-pip install dashscope
+pip install requests
 ```
 
 ## 使用示例
@@ -117,7 +135,8 @@ response = requests.post(
 ### 图像编辑
 ```python
 response = requests.post(
-    "...",
+    "https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
+    headers={"Authorization": f"Bearer {DASHSCOPE_API_KEY}"},
     json={
         "model": "qwen-image-edit-plus",
         "input": {
@@ -133,12 +152,66 @@ response = requests.post(
 )
 ```
 
+### 图像翻译
+```python
+import time
+
+# 1. 创建翻译任务
+response = requests.post(
+    "https://dashscope.aliyuncs.com/api/v1/services/aigc/image2image/image-synthesis",
+    headers={
+        "Authorization": f"Bearer {DASHSCOPE_API_KEY}",
+        "X-DashScope-Async": "enable"
+    },
+    json={
+        "model": "qwen-mt-image",
+        "input": {
+            "image_url": "https://example.com/english-poster.jpg",
+            "source_lang": "en",
+            "target_lang": "zh"
+        }
+    }
+)
+task_id = response.json()["output"]["task_id"]
+
+# 2. 轮询获取结果
+while True:
+    time.sleep(3)
+    result = requests.get(
+        f"https://dashscope.aliyuncs.com/api/v1/tasks/{task_id}",
+        headers={"Authorization": f"Bearer {DASHSCOPE_API_KEY}"}
+    ).json()
+    if result["output"]["task_status"] == "SUCCEEDED":
+        print(result["output"]["image_url"])
+        break
+```
+
+### 使用客户端脚本
+```bash
+# 文生图
+python scripts/client.py generate "一只橘猫在阳光下打盹" --size 1920*1080
+
+# 图像编辑
+python scripts/client.py edit "https://example.com/photo.jpg" "把背景换成星空" -n 2
+
+# 图像翻译
+python scripts/client.py translate "https://example.com/english.jpg" --source en --target zh
+
+# 带高级选项的翻译
+python scripts/client.py translate "https://example.com/ad.jpg" \
+    --source auto --target zh \
+    --domain "E-commerce product description" \
+    --sensitives "促销,折扣" \
+    --terms "API:应用程序接口,ML:机器学习"
+```
+
 ## 特点
 
 ✅ 国内网络友好（阿里云服务）
 ✅ 支持中文提示词
 ✅ 多种分辨率选择
 ✅ 智能提示词优化
+✅ 图像文字翻译，保留排版
 ✅ 24小时图像存储
 
 ## 适用场景
@@ -148,6 +221,8 @@ response = requests.post(
 - 社交媒体内容创作
 - 艺术风格迁移
 - 图像修复与增强
+- 海报/说明书多语言翻译
+- 跨境电商图片本地化
 
 ## 许可证
 

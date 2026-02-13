@@ -1,6 +1,6 @@
 ---
 name: aliyun-image
-description: "阿里云百炼图像生成与编辑。文生图：根据文本生成图像，支持复杂文字渲染。图像编辑：单图编辑、多图融合、风格迁移、物体增删。触发词：生成图片、AI作画、文生图、图像编辑、修图、换背景、风格迁移、多图融合。模型：qwen-image-plus(默认)、qwen-image-max、qwen-image-edit-plus(默认)、qwen-image-edit-max。"
+description: "阿里云百炼图像生成、编辑与翻译。文生图：根据文本生成图像，支持复杂文字渲染。图像编辑：单图编辑、多图融合、风格迁移、物体增删。图像翻译：翻译图像中的文字，保留原始排版，支持11种源语言和14种目标语言。触发词：生成图片、AI作画、文生图、图像编辑、修图、换背景、风格迁移、多图融合、图像翻译、图片翻译。模型：qwen-image-plus(默认)、qwen-image-max、qwen-image-edit-plus(默认)、qwen-image-edit-max、qwen-mt-image。"
 metadata:
   {
     "openclaw":
@@ -60,6 +60,41 @@ resp = requests.post(
 print(resp.json()["output"]["choices"][0]["message"]["content"][0]["image"])
 ```
 
+### 图像翻译
+
+```python
+import os, requests, time
+
+# 1. 创建翻译任务
+resp = requests.post(
+    "https://dashscope.aliyuncs.com/api/v1/services/aigc/image2image/image-synthesis",
+    headers={
+        "Authorization": f"Bearer {os.getenv('DASHSCOPE_API_KEY')}",
+        "X-DashScope-Async": "enable"
+    },
+    json={
+        "model": "qwen-mt-image",
+        "input": {
+            "image_url": "https://example.com/english-poster.jpg",
+            "source_lang": "en",
+            "target_lang": "zh"
+        }
+    }
+)
+task_id = resp.json()["output"]["task_id"]
+
+# 2. 轮询获取结果
+while True:
+    time.sleep(3)
+    result = requests.get(
+        f"https://dashscope.aliyuncs.com/api/v1/tasks/{task_id}",
+        headers={"Authorization": f"Bearer {os.getenv('DASHSCOPE_API_KEY')}"}
+    ).json()
+    if result["output"]["task_status"] == "SUCCEEDED":
+        print(result["output"]["image_url"])
+        break
+```
+
 ---
 
 ## 默认配置
@@ -68,6 +103,7 @@ print(resp.json()["output"]["choices"][0]["message"]["content"][0]["image"])
 |------|----------|------------|
 | 文生图 | `qwen-image-plus` | `qwen-image-max` |
 | 图像编辑 | `qwen-image-edit-plus` | `qwen-image-edit-max` |
+| 图像翻译 | `qwen-mt-image` | - |
 
 **规则**：默认使用 Plus 系列，仅当用户明确要求"最好的"、"最高质量"时使用 Max 系列。
 
@@ -91,6 +127,7 @@ print(resp.json()["output"]["choices"][0]["message"]["content"][0]["image"])
 |------|------|
 | [references/text-to-image.md](references/text-to-image.md) | 文生图完整API参考：模型列表、分辨率、所有参数 |
 | [references/image-edit.md](references/image-edit.md) | 图像编辑完整API参考：单图编辑、多图融合、输入要求 |
+| [references/image-translate.md](references/image-translate.md) | 图像翻译完整API参考：支持语言、异步调用、术语定义 |
 
 ---
 
@@ -98,7 +135,7 @@ print(resp.json()["output"]["choices"][0]["message"]["content"][0]["image"])
 
 | 脚本 | 用途 |
 |------|------|
-| [scripts/client.py](scripts/client.py) | 封装好的API客户端，支持文生图和图像编辑 |
+| [scripts/client.py](scripts/client.py) | 封装好的API客户端，支持文生图、图像编辑和图像翻译 |
 
 **使用脚本**：
 
@@ -108,6 +145,9 @@ python scripts/client.py generate "一只橘猫在阳光下打盹" --size 1920*1
 
 # 图像编辑
 python scripts/client.py edit "https://example.com/photo.jpg" "把背景换成星空" -n 2
+
+# 图像翻译
+python scripts/client.py translate "https://example.com/english.jpg" --source en --target zh
 ```
 
 ---
