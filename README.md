@@ -12,6 +12,7 @@
 
 - **GitHub 仓库**: https://github.com/StanleyChanH/aliyun-image-skill
 - **ClawHub 页面**: https://clawhub.com/skill/aliyun-image
+- **GitHub Actions**: 自动同步 ✅
 
 ### 自动同步机制
 - ✅ 使用 GitHub Actions 自动同步到 ClawHub
