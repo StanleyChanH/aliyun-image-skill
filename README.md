@@ -1,6 +1,6 @@
 # 阿里云百炼图像生成与编辑 Skill
 
-[![Version](https://img.shields.io/badge/version-1.0.3-blue.svg)](https://clawhub.com)
+[![Version](https://img.shields.io/badge/version-1.0.4-blue.svg)](https://clawhub.com)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![ClawHub](https://img.shields.io/badge/ClawHub-Synced-green.svg)](https://clawhub.com/skill/aliyun-image)
 
@@ -24,6 +24,11 @@
 查看 [.github/SETUP.md](.github/SETUP.md) 了解如何配置 GitHub Actions 自动同步。
 
 ## 更新日志
+
+### v1.0.4 (2026-02-13)
+- 修复 GitHub Actions 权限问题
+- 添加 `permissions: contents: write` 以支持自动创建 Release
+- 完整测试自动同步流程
 
 ### v1.0.3 (2026-02-13)
 - 测试 GitHub Actions 自动同步到 ClawHub

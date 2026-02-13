@@ -10,6 +10,9 @@ on:
       - 'references/**'
       - 'scripts/**'
 
+permissions:
+  contents: write
+
 jobs:
   sync:
     runs-on: ubuntu-latest
