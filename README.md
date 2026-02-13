@@ -1,6 +1,6 @@
 # 阿里云百炼图像生成与编辑 Skill
 
-[![Version](https://img.shields.io/badge/version-1.0.1-blue.svg)](https://clawhub.com)
+[![Version](https://img.shields.io/badge/version-1.0.2-blue.svg)](https://clawhub.com)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![ClawHub](https://img.shields.io/badge/ClawHub-Synced-green.svg)](https://clawhub.com/skill/aliyun-image)
 
@@ -23,6 +23,12 @@
 查看 [.github/SETUP.md](.github/SETUP.md) 了解如何配置 GitHub Actions 自动同步。
 
 ## 更新日志
+
+### v1.0.2 (2026-02-13)
+- 作者改为 StanleyChanH
+- 添加 GitHub Actions 自动同步到 ClawHub
+- 更新文档说明 GitHub 和 ClawHub 同步更新机制
+- 添加配置文档 .github/SETUP.md
 
 ### v1.0.1 (2026-02-13)
 - 更新 API 文档和示例代码
